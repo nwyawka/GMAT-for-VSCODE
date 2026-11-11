@@ -1,0 +1,4 @@
+# Core/Widgets only; avoids the large WebEngine/PDF packages in full PySide6.
+PySide6-Essentials>=6.7,<6.12
+pyqtgraph>=0.13,<1
+

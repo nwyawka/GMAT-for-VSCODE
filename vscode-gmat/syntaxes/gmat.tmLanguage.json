@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "GMAT",
+  "scopeName": "source.gmat",
+  "patterns": [
+    {"name": "comment.line.percentage.gmat", "match": "%.*$"},
+    {"name": "string.quoted.single.gmat", "begin": "'", "end": "'"},
+    {"name": "keyword.control.gmat", "match": "\\b(BeginMissionSequence|Create|GMAT|Propagate|Maneuver|Target|EndTarget|Vary|Achieve|Report|If|Else|EndIf|While|EndWhile|For|EndFor|Save|Toggle|CallFunction)\\b"},
+    {"name": "storage.type.gmat", "match": "\\b(Spacecraft|ForceModel|Propagator|ReportFile|OrbitView|XYPlot|ImpulsiveBurn|FiniteBurn|DifferentialCorrector|Variable|Array|String|CoordinateSystem|FuelTank|Thruster)\\b"},
+    {"name": "constant.language.gmat", "match": "\\b(On|Off|true|false|Earth|Luna|Sun)\\b"},
+    {"name": "constant.numeric.gmat", "match": "(?<![A-Za-z_])[-+]?(?:\\d+\\.?(?:\\d*)?|\\.\\d+)(?:[eE][-+]?\\d+)?"}
+  ]
+}
+

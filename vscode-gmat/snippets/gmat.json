@@ -1,0 +1,5 @@
+{
+  "Spacecraft": {"prefix": "gmat-spacecraft", "body": ["Create Spacecraft ${1:Sat};", "GMAT ${1:Sat}.CoordinateSystem = EarthMJ2000Eq;", "GMAT ${1:Sat}.DisplayStateType = Keplerian;", "GMAT ${1:Sat}.SMA = ${2:7000};", "GMAT ${1:Sat}.ECC = ${3:0.01};", "GMAT ${1:Sat}.INC = ${4:28.5};"]},
+  "Mission sequence": {"prefix": "gmat-mission", "body": ["BeginMissionSequence;", "Propagate ${1:Prop}(${2:Sat}) {${2:Sat}.ElapsedDays = ${3:1}};"]}
+}
+

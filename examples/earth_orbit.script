@@ -1,0 +1,51 @@
+% Minimal headless GMAT example. Report output is redirected per run.
+Create Spacecraft Sat;
+GMAT Sat.DateFormat = UTCGregorian;
+GMAT Sat.Epoch = '10 Nov 2026 12:00:00.000';
+GMAT Sat.CoordinateSystem = EarthMJ2000Eq;
+GMAT Sat.DisplayStateType = Keplerian;
+GMAT Sat.SMA = 7000;
+GMAT Sat.ECC = 0.01;
+GMAT Sat.INC = 28.5;
+GMAT Sat.RAAN = 45;
+GMAT Sat.AOP = 0;
+GMAT Sat.TA = 0;
+
+Create ForceModel EarthForces;
+GMAT EarthForces.CentralBody = Earth;
+GMAT EarthForces.PrimaryBodies = {Earth};
+GMAT EarthForces.GravityField.Earth.Degree = 8;
+GMAT EarthForces.GravityField.Earth.Order = 8;
+
+Create Propagator Prop;
+GMAT Prop.FM = EarthForces;
+GMAT Prop.Type = PrinceDormand78;
+GMAT Prop.InitialStepSize = 60;
+
+Create ReportFile StateReport;
+GMAT StateReport.Filename = 'earth_orbit.csv';
+GMAT StateReport.Precision = 12;
+GMAT StateReport.WriteHeaders = true;
+GMAT StateReport.LeftJustify = On;
+GMAT StateReport.ZeroFill = Off;
+GMAT StateReport.FixedWidth = false;
+GMAT StateReport.Delimiter = ',';
+GMAT StateReport.Add = {Sat.ElapsedSecs, Sat.EarthMJ2000Eq.X, Sat.EarthMJ2000Eq.Y, Sat.EarthMJ2000Eq.Z, Sat.EarthMJ2000Eq.VX, Sat.EarthMJ2000Eq.VY, Sat.EarthMJ2000Eq.VZ};
+
+% Displayed only by the extension's +H native-plots mode.
+Create OrbitView EarthOrbitView;
+GMAT EarthOrbitView.SolverIterations = Current;
+GMAT EarthOrbitView.Add = {Sat, Earth};
+GMAT EarthOrbitView.CoordinateSystem = EarthMJ2000Eq;
+GMAT EarthOrbitView.DrawObject = [true true];
+GMAT EarthOrbitView.DataCollectFrequency = 1;
+GMAT EarthOrbitView.UpdatePlotFrequency = 50;
+GMAT EarthOrbitView.NumPointsToRedraw = 0;
+GMAT EarthOrbitView.ShowPlot = true;
+GMAT EarthOrbitView.ViewPointReference = Earth;
+GMAT EarthOrbitView.ViewPointVector = [0 0 30000];
+GMAT EarthOrbitView.ViewDirection = Earth;
+
+BeginMissionSequence;
+Propagate Prop(Sat) {Sat.ElapsedDays = 0.1};
+

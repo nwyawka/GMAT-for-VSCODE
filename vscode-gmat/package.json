@@ -1,0 +1,44 @@
+{
+  "name": "gmat-headless",
+  "displayName": "GMAT Headless",
+  "description": "Edit, run, inspect, and plot GMAT missions without the GMAT GUI or a server.",
+  "version": "0.5.3",
+  "publisher": "local",
+  "engines": {"vscode": "^1.80.0"},
+  "main": "./extension.js",
+  "activationEvents": ["onLanguage:gmat", "onView:gmatRuns"],
+  "contributes": {
+    "languages": [{"id": "gmat", "aliases": ["GMAT"], "extensions": [".script"], "configuration": "./language-configuration.json"}],
+    "grammars": [{"language": "gmat", "scopeName": "source.gmat", "path": "./syntaxes/gmat.tmLanguage.json"}],
+    "snippets": [{"language": "gmat", "path": "./snippets/gmat.json"}],
+    "commands": [
+      {"command": "gmat.run", "title": "GMAT: Run Headless (-H)", "icon": "$(play)"},
+      {"command": "gmat.runWithPlots", "title": "GMAT: Run with Native Plots (+H)", "icon": "$(graph-line)"},
+      {"command": "gmat.stop", "title": "GMAT: Stop Mission", "icon": "$(debug-stop)"},
+      {"command": "gmat.selectExecutable", "title": "GMAT: Select Installation"},
+      {"command": "gmat.refreshRuns", "title": "GMAT: Refresh Runs", "icon": "$(refresh)"},
+      {"command": "gmat.openResult", "title": "GMAT: Open Result"},
+      {"command": "gmat.revealRun", "title": "GMAT: Reveal Run in Finder"}
+    ],
+    "menus": {
+      "editor/title": [
+        {"command": "gmat.run", "when": "editorLangId == gmat", "group": "navigation@1"},
+        {"command": "gmat.runWithPlots", "when": "editorLangId == gmat", "group": "navigation@2"},
+        {"command": "gmat.stop", "when": "editorLangId == gmat", "group": "navigation@3"}
+      ],
+      "view/title": [{"command": "gmat.refreshRuns", "when": "view == gmatRuns", "group": "navigation"}],
+      "view/item/context": [
+        {"command": "gmat.openResult", "when": "view == gmatRuns && viewItem == gmatResult", "group": "inline"},
+        {"command": "gmat.revealRun", "when": "view == gmatRuns && viewItem == gmatRun", "group": "inline"}
+      ]
+    },
+    "viewsContainers": {"activitybar": [{"id": "gmat", "title": "GMAT", "icon": "media/orbit.svg"}]},
+    "views": {"gmat": [{"id": "gmatRuns", "name": "Mission Runs"}]},
+    "configuration": {
+      "title": "GMAT Headless",
+      "properties": {
+        "gmatHeadless.executable": {"type": "string", "default": "", "description": "Path to GmatConsole on this Mac."}
+      }
+    }
+  }
+}
